@@ -1,0 +1,78 @@
+{
+  "name": "voltron",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "./voltron/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/voltron"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "voltron:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "voltron:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "voltron:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "voltron:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "voltron:build:development"
+        },
+        "production": {
+          "buildTarget": "voltron:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/voltron"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../coverage/voltron"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["./voltron/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "voltron:build"
+      }
+    }
+  },
+  "tags": []
+}
